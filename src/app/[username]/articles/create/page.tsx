@@ -1,10 +1,14 @@
 import BlogPostEditor from "@/components/BlogPostEditor";
 
-const CreateArticlePage = () => {
+const CreateArticlePage = async ({
+  params,
+}: {
+  params: { username: string };
+}) => {
   return (
     <main className="py-10">
       <div className="max-w-screen-xl mx-auto">
-        <BlogPostEditor />
+        <BlogPostEditor username={params.username} />
       </div>
     </main>
   );

@@ -24,9 +24,16 @@ const BlogPostEditorSchema = z.object({
   title: z.string(),
 });
 
-const BlogPostEditor = () => {
+interface BlogPostEditorProps {
+  username: string;
+}
+
+const BlogPostEditor = ({ username }: BlogPostEditorProps) => {
   const form = useForm<z.infer<typeof BlogPostEditorSchema>>({
     resolver: zodResolver(BlogPostEditorSchema),
+    defaultValues: {
+      title: "",
+    },
   });
   const editor = useEditor({
     editorProps: {
@@ -41,20 +48,20 @@ const BlogPostEditor = () => {
     },
   });
 
-  if (!editor) {
-    return null;
-  }
-
   const onSubmit = async (data: z.infer<typeof BlogPostEditorSchema>) => {
     const response = await fetch("/api/posts", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, author: username }),
     });
     const result = await response.json();
     if (!result.success) {
       console.log("Couldn't create post.");
     }
   };
+
+  if (!editor) {
+    return null;
+  }
 
   return (
     <Form {...form}>

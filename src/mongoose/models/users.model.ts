@@ -44,6 +44,7 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
