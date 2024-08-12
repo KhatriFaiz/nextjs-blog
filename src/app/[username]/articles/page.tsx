@@ -1,8 +1,23 @@
 import { Button } from "@/components/ui/button";
+import { getPostsByUsername } from "@/lib/posts";
+import PostRecord from "@/components/Records/PostRecord";
 import Link from "next/link";
-import React from "react";
 
-const UserArticlesPage = ({ params }: { params: { username: string } }) => {
+const UserArticlesPage = async ({
+  params,
+}: {
+  params: { username: string };
+}) => {
+  const posts = await getPostsByUsername(params.username);
+
+  if (!posts || !posts.length) {
+    return (
+      <h1 className="text-xl text-center my-16 text-gray-700">
+        No posts to display
+      </h1>
+    );
+  }
+
   return (
     <main>
       <div className="max-w-screen-xl mx-auto">
@@ -13,6 +28,11 @@ const UserArticlesPage = ({ params }: { params: { username: string } }) => {
               <Link href={`/${params.username}/articles/create`}>Create</Link>
             </Button>
           </div>
+        </div>
+        <div>
+          {posts.map((post) => (
+            <PostRecord data={post} />
+          ))}
         </div>
       </div>
     </main>

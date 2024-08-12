@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 interface Author {
+  _id: string;
   username: string;
 }
 
@@ -21,7 +22,7 @@ function PostRecord({ data }: PostRecordProps) {
         </Link>
       </h2>
       <Author data={data.author} />
-      <Link href="#" className="underline">
+      <Link href={`${data.author._id}/${data.slug}`} className="underline">
         Read {">>"}
       </Link>
     </div>
