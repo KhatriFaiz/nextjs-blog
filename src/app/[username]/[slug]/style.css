@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer base {
+  .blog-article strong {
+    @apply font-semibold;
+  }
+  .blog-article h2 {
+    @apply text-4xl leading-relaxed font-semibold mb-2;
+  }
+  .blog-article h3 {
+    @apply text-3xl leading-relaxed font-semibold mb-2;
+  }
+  .blog-article h4 {
+    @apply text-2xl leading-relaxed font-semibold mb-2;
+  }
+  .blog-article p {
+    @apply text-lg leading-relaxed mb-2;
+  }
+}
