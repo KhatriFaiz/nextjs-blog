@@ -1,8 +1,17 @@
-import PostRecord from "@/components/Records/PostRecord";
 import { getPosts } from "@/lib/posts";
+import PostRecord from "@/components/Records/PostRecord";
 
 export default async function Home() {
   const posts = await getPosts();
+
+  if (!posts || !posts.length) {
+    return (
+      <h1 className="text-xl text-center my-16 text-gray-700">
+        No posts to display
+      </h1>
+    );
+  }
+
   return (
     <section>
       <div className="max-w-screen-lg mx-auto">
