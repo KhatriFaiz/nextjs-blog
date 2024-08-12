@@ -14,6 +14,7 @@ import { useEditor } from "@tiptap/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useRouter } from "next/navigation";
 import StarterKit from "@tiptap/starter-kit";
 import Tiptap from "../Tiptap";
 import Image from "@tiptap/extension-image";
@@ -21,6 +22,7 @@ import Underline from "@tiptap/extension-underline";
 
 const BlogPostEditorSchema = z.object({
   content: z.string(),
+  slug: z.string(),
   title: z.string(),
 });
 
@@ -29,10 +31,12 @@ interface BlogPostEditorProps {
 }
 
 const BlogPostEditor = ({ username }: BlogPostEditorProps) => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof BlogPostEditorSchema>>({
     resolver: zodResolver(BlogPostEditorSchema),
     defaultValues: {
       title: "",
+      slug: "",
     },
   });
   const editor = useEditor({
@@ -57,6 +61,9 @@ const BlogPostEditor = ({ username }: BlogPostEditorProps) => {
     if (!result.success) {
       console.log("Couldn't create post.");
     }
+    if (result.success) {
+      router.push(`/${username}/articles`);
+    }
   };
 
   if (!editor) {
@@ -76,6 +83,19 @@ const BlogPostEditor = ({ username }: BlogPostEditorProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
