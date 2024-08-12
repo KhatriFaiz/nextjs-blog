@@ -16,6 +16,7 @@ export async function GET() {
 const BlogSchema = z.object({
   title: z.string(),
   content: z.string(),
+  slug: z.string(),
   author: z.string({ message: "Author is required." }),
 });
 
@@ -38,7 +39,6 @@ export async function POST(request: Request) {
 
   await connectDatabase();
   const body = await request.json();
-
   // Validate body
   const validateBody = BlogSchema.safeParse(body);
   if (!validateBody.success) {
@@ -58,6 +58,7 @@ export async function POST(request: Request) {
       title: body.title,
       content: body.content,
       author: user.id,
+      slug: body.slug,
     });
     const savedPost = await post.save();
     return NextResponse.json(
