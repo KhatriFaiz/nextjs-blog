@@ -32,8 +32,8 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <div className="h-24 container mx-auto flex justify-between items-center">
+    <header className="h-20 absolute top-0 w-full">
+      <div className="h-full container mx-auto flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <MobileNavigationMenu />
           <Logo />
